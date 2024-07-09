@@ -5,33 +5,33 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { TextureLoader } from 'expo-three';
 import { useAnimatedSensor, SensorType } from "react-native-reanimated";
 
-function Box(props) {
-  const [active, setActive] = useState(false);
+// function Box(props) {
+//   const [active, setActive] = useState(false);
 
-  const mesh = useRef()
+//   const mesh = useRef()
 
-  useFrame((state, delta) => {
-    if (active) {
-      mesh.current.rotation.y += delta*4
-      mesh.current.rotation.x -= delta*-1
-    }
-  })
+//   useFrame((state, delta) => {
+//     if (active) {
+//       mesh.current.rotation.y += delta*4
+//       mesh.current.rotation.x -= delta*-1
+//     }
+//   })
 
-  return (
-    <mesh
-      {...props}
-      ref={mesh}
-      scale={active ? 1.5 : 1}
-      onClick={(event) => setActive(!active)}
-    >
-      <boxGeometry />
-      <meshStandardMaterial color={active ? "blue" : "red"} />
-    </mesh>
-  );
-}
+//   return (
+//     <mesh
+//       {...props}
+//       ref={mesh}
+//       scale={active ? 1.5 : 1}
+//       onClick={(event) => setActive(!active)}
+//     >
+//       <boxGeometry />
+//       <meshStandardMaterial color={active ? "blue" : "red"} />
+//     </mesh>
+//   );
+// }
 
 
-function Shoe(props) {
+function Shoe (props) {
 
   const [base, normal, rough] = useLoader(TextureLoader, [
     require("./assets/Airmax/textures/BaseColor.jpg"),
@@ -52,8 +52,8 @@ function Shoe(props) {
   const material = useLoader(MTLLoader, require('./assets/Airmax/shoe.mtl'))
 
   const obj = useLoader(
-    OBJLoader, 
-    require('./assets/Airmax/shoe.obj'), 
+    OBJLoader,
+    require('./assets/Airmax/shoe.obj'),
     (loader) => {
       material.preload();
       loader.setMaterials(material);
@@ -71,16 +71,16 @@ function Shoe(props) {
   }, [obj])
 
   return (
-    <mesh ref={mesh} rotation={[0.7,0,0]}>
+    <mesh ref={mesh} rotation={[0.7, 0, 0]}>
       <primitive object={obj} scale={10} />
     </mesh>
   )
 }
 
-export default function App() {
+export default function App () {
 
   const animatedSensor = useAnimatedSensor(SensorType.GYROSCOPE, {
-    interval : 100,
+    interval: 100,
   })
 
 
@@ -89,7 +89,7 @@ export default function App() {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Suspense fallback={null}>
-      <Shoe animatedSensor={animatedSensor}/>
+        <Shoe animatedSensor={animatedSensor} />
       </Suspense>
       {/* <Box />
       <Box position={[0,-2,0]}/>
